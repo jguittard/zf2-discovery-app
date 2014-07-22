@@ -1,0 +1,36 @@
+<?php
+$title = "Update user's status";
+$this->headTitle($title);
+
+$form = $this->form;
+$form->prepare();
+$form->setAttribute('action', $this->url('status', array('action' => 'update', 'id' => $this->id)))
+     ->setAttribute('class', 'form-horizontal');
+?>
+
+<h1 class="page-header"><?php echo $title; ?></h1>
+
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formhidden($form->get('id')); ?>
+<div class="form-group">
+	<?php echo $this->formlabel($form->get('user')); ?>
+	<div class="col-sm-6">
+		<?php echo $this->formelement($form->get('user')); ?>
+		<?php echo $this->formelementerrors($form->get('user'), array('class' => 'text-danger')); ?>
+	</div>
+</div>
+<div class="form-group">
+	<?php echo $this->formlabel($form->get('message')); ?>
+	<div class="col-sm-6">
+		<?php echo $this->formelement($form->get('message')); ?>
+		<?php echo $this->formelementerrors($form->get('message'), array('class' => 'text-danger')); ?>
+	</div>
+</div>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <?php echo $this->formElement($form->get('submit')); ?>
+      <a href="<?php echo $this->url('status'); ?>" class="btn btn-danger">Cancel</a>
+    </div>
+  </div>
+<?php echo $this->formhidden($form->get('csrf')); ?>
+<?php echo $this->form()->closeTag($form); ?>

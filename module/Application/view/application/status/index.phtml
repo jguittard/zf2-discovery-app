@@ -1,0 +1,66 @@
+<?php 
+$form = $this->form;
+$form->prepare();
+$title = "Users' statuses";
+$this->headTitle($title);
+?>
+
+<h1 class="page-header"><?php echo $title; ?></h1>
+<?php $flash = $this->flashMessenger();
+ echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+ echo $flash->render('warning', array('alert', 'alert-dismissable', 'alert-warning'));
+ echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success')); ?>
+<?php if (count($form->getMessages())): ?>
+<div class="alert alert-danger">
+<ul>
+<?php foreach ($form->getMessages() as $input => $errors): ?>
+<li>
+<?php foreach ($errors as $key => $value): ?>
+<strong><?php echo ucfirst($input)?></strong> : <?php echo $value; ?>
+<?php endforeach; ?>
+</li>
+<?php endforeach; ?>
+</ul>
+</div>
+<?php endif; ?>
+<?php echo $this->form()->openTag($form); ?>
+<?php echo $this->formhidden($form->get('id')); ?>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>User</th>
+			<th>Message</th>
+			<th>Created on</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php if (count($this->statuses) > 0): ?>
+		<?php foreach ($this->statuses as $status): ?>
+		<tr>
+			<td><?php echo $status->getId(); ?></td>
+			<td><?php echo $status->getUser(); ?></td>
+			<td><?php echo $status->getMessage(); ?></td>
+			<td><?php echo (new \DateTime($status->getCreatedAt()))->format('d/m/Y H:i'); ?></td>
+			<td>
+				<a href="<?php echo $this->url('status', array('id' => $status->getId(), 'action' => 'update')); ?>" class="btn btn-default"><i class="glyphicon glyphicon-edit"></i></a>
+				<a href="<?php echo $this->url('status', array('id' => $status->getId(), 'action' => 'delete')); ?>" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+		<?php else: ?>
+		<tr>
+			<td colspan="5" class="text-center text-muted">No status set yet. Create one !</td>
+		</tr>
+		<?php endif; ?>
+		<tr>
+			<td>&nbsp;</td>
+			<td><?php echo $this->formtext($form->get('user')); ?></td>
+			<td><?php echo $this->formtext($form->get('message')); ?></td>
+			<td><?php echo $this->formhidden($form->get('csrf')); ?></td>
+			<td><?php echo $this->formsubmit($form->get('submit')); ?></td>
+		</tr>
+	</tbody>
+</table>
+<?php echo $this->form()->closeTag($form); ?>
