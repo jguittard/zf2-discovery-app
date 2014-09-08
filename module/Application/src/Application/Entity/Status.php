@@ -4,7 +4,7 @@ namespace Application\Entity;
 
 use Zend\Stdlib\ArraySerializableInterface;
 
-class Status// implements ArraySerializableInterface
+class Status implements ArraySerializableInterface
 {
 	/**
 	 * 

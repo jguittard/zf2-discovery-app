@@ -9,7 +9,7 @@ class StatusController extends AbstractActionController
 {
 	/**
 	 * 
-	 * @var Application\Model\StatusTable
+	 * @var \Application\Model\StatusTable
 	 */
 	protected $statusTable;
 	
@@ -58,6 +58,7 @@ class StatusController extends AbstractActionController
 			$form->bind($status);
 		} else {
 			$this->flashMessenger()->addWarningMessage('Unable to retrieve an user with ID #' . $id);
+			$this->redirect()->toRoute('status');
 		}
 		if ( false !== $prg ) {
 			$form->setData($prg);
